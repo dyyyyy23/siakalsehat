@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Temukan inspirasi dan pengetahuan baru setiap hari.">
+    <meta name="keywords" content="akal,akalsehat, Inspirasi, Perkebunan,Institut Teknologi Sawit Indonesia, artikel perkebunan, Sawit, ITSI, Bisnis CPO, Smart Farming, CCS, Carbon & Caputure Storage, Blockchain">
+    <meta name="author" content="AsH">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content=" Si Akal SeHat">
+    <meta property="og:description" content="Temukan inspirasi dan pengetahuan baru setiap hari.">
+    <meta property="og:image" content="https://sandy.stinomercy.site">
+    <meta property="og:url" content="https://sandy.stinomercy.site">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta property="og:site_name" content="Si Akal SeHat">
+    <title>Si Akal SeHat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <!--Favicon-->
+         <link rel="shortcut icon" href="AsH.png" type="image/x-icon" />
+         <link rel="icon" href="AsH.png" type="image/x-icon" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        section {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.5s ease;
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        #hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        #articles {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4rem 2rem;
+        }
+
+        .articles-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .articles-grid.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .article-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #quotes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .quotes-container {
+            max-width: 800px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8) translateY(50px);
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .quotes-container.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .scroll-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .scroll-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .quote {
+                font-size: 1.5rem;
+            }
+        }
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .article-card:hover .article-image {
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="vb3.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <header>
+        <nav>
+            <a href="AsH.html" class="logo">AsH</a>
+            <div class="nav-links">
+                <a href="#hero">Home</a>
+                <a href="#articles">Artikel</a>
+                <a href="#quotes">Quotes</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="scroll-indicator">
+        <div class="scroll-dot active" data-section="hero"></div>
+        <div class="scroll-dot" data-section="articles"></div>
+        <div class="scroll-dot" data-section="quotes"></div>
+    </div>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1> Si Akal SeHat</h1>
+            <p>Temukan inspirasi dan pengetahuan baru setiap hari</p>
+        </div>
+    </section>
+     <section id="articles">
+        <div class="articles-grid">
+            <div class="article-card">
+                <img src="itsii.jpg" alt="Article 1" class="article-image">
+                <h2> Kampus Pencetak Sarjana Profesional dan Berkarakter di Bidang Perkebunan Kelapa Sawit</h2>
+            </div>
+            <div class="article-card">
+                <img src="bisniscpo.jpg" alt="Article 2" class="article-image">
+                <h2>Mengenal CPO ( Crude Palm Oil ) 2025  </h2>
+            </div>
+            <div class="article-card">
+                <img src="smartfarming.jpeg" alt="Article 3" class="article-image">
+                <h2>Smart Farming, Pertanian Presisi dan Pertanian Masa Depan</h2>
+            </div>
+            <div class="article-card">
+                <img src="ccs.jpeg" alt="Article 1" class="article-image">
+                <h2>Pemanfaatan Teknologi Carbon Capture Storage (CCS)</h2>
+            </div>
+            <div class="article-card">
+                <img src="bc.jpg" alt="Article 1" class="article-image">
+                <h2>Blockchain untuk Transparansi Rantai Pasok Hasil Perkebunan</h2>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="quotes">
+        <div class="quotes-container">
+            <div class="quote">"Hidup adalah tentang belajar dan berkembang setiap hari."</div>
+            <div class="quote">"Kesuksesan dimulai dari mimpi yang berani."</div>
+            <div class="quote">"Jadilah versi terbaik dari dirimu sendiri."</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy;AsH. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Intersection Observer untuk animasi scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.querySelector('.articles-grid'));
+        observer.observe(document.querySelector('.quotes-container'));
+
+        // Scroll indicator
+        const sections = document.querySelectorAll('section');
+        const dots = document.querySelectorAll('.scroll-dot');
+
+        const observerSection = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    dots.forEach(dot => {
+                        if (dot.dataset.section === id) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.7 });
+
+        sections.forEach(section => observerSection.observe(section));
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const section = document.getElementById(dot.dataset.section);
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+      // Updated Article cards click handler
+      document.querySelectorAll('.article-card').forEach((card, index) => {
+            card.addEventListener('click', () => {
+                switch(index) {
+                    case 0:
+                        window.location.href = 'itsi.html';
+                        break;
+                    case 1:
+                        window.location.href = 'bisniscpo.html';
+                        break;
+                    case 2:
+                        window.location.href = 'smartfarming.html';
+                        break;
+                    case 3:
+                        window.location.href = 'css.html';
+                        break;
+                    case 4:
+                        window.location.href = 'blockchain.html';
+                        break;
+                }
+            });
+        });
+
+        // Previous remaining script code remains the same
+    </script>
+</body>
+</html>
